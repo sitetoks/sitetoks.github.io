@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirim Pesan</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("tw3uOhNFHnKLjQIPP");  // Ganti dengan User ID EmailJS Anda
+        })();
+    </script>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <form id="pesanForm">
+        <h1>Kirim Pesan</h1>
+        <label for="pesan">Pesan Kamu<3:</label>
+        <textarea id="pesan" name="pesan" rows="4" cols="50" required placeholder="Tulis pesan km di sini <3..."></textarea>
+        <button type="submit">Kirim Pesan</button>
+        <div id="status"></div>
+    </form>
+
+    <script>
+        document.getElementById('pesanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const statusDiv = document.getElementById('status');
+            statusDiv.style.display = 'block';
+            statusDiv.className = '';
+            statusDiv.textContent = 'Mengirim pesan...';
+
+            const templateParams = {
+                pesan: document.getElementById('pesan').value
+            };
+
+            emailjs.send('service_9m89tzp', 'template_wg0joio', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    statusDiv.textContent = 'Pesan berhasil dikirim. Makasihh<3!';
+                    statusDiv.className = 'success';
+                    document.getElementById('pesanForm').reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    statusDiv.textContent = 'Aduh Ada Masalah Niih!!.';
+                    statusDiv.className = 'error';
+                });
+        });
+    </script>
+</body>
+</html>
